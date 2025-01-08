@@ -121,30 +121,35 @@
     document.getElementById('download').addEventListener('click', () => {
       const { jsPDF } = window.jspdf;
 
-      // Create a new jsPDF instance
-      const pdf = new jsPDF();
+      // Create a new jsPDF instance with card dimensions
+      const pdf = new jsPDF({
+        orientation: 'landscape',
+        unit: 'mm',
+        format: [85, 54], // Business card size: 85mm x 54mm
+      });
 
-      // Add graphics
-      pdf.setFillColor(0, 71, 171); // Blue background
-      pdf.rect(0, 0, 210, 60, 'F'); // Header rectangle
+      // Add background
+      pdf.setFillColor(0, 71, 171); // Blue gradient color
+      pdf.rect(0, 0, 85, 54, 'F'); // Full card background
+
+      // Add white rectangle for content
+      pdf.setFillColor(255, 255, 255); // White
+      pdf.roundedRect(5, 5, 75, 44, 3, 3, 'F'); // Add padding
 
       // Add header text
-      pdf.setTextColor(255, 255, 255); // White text
-      pdf.setFontSize(18);
-      pdf.text('Kijoli Nawawi Said', 105, 30, { align: 'center' });
+      pdf.setTextColor(0, 71, 171); // Blue text
+      pdf.setFontSize(16);
+      pdf.text('Kijoli Nawawi Said', 42.5, 20, { align: 'center' });
+
       pdf.setFontSize(12);
-      pdf.text('Director, Procurement Management Services', 105, 40, { align: 'center' });
-      pdf.text('Ministry of Communication and Information Technology', 105, 50, { align: 'center' });
+      pdf.text('Director, Procurement Management Services', 42.5, 25, { align: 'center' });
+      pdf.text('Ministry of Communication & Information Technology', 42.5, 30, { align: 'center' });
 
       // Add contact details
       pdf.setTextColor(0, 0, 0); // Black text
-      pdf.setFontSize(14);
-      pdf.text('Contact Details', 105, 70, { align: 'center' });
-      pdf.setFontSize(12);
-      pdf.text('Mobile: +255-715-890626 / +255-689-398851', 105, 80, { align: 'center' });
-      pdf.text('Address:', 105, 90, { align: 'center' });
-      pdf.text('Ministry of Communication and Information Technology', 105, 100, { align: 'center' });
-      pdf.text('P.O. BOX 677, Dodoma, Tanzania', 105, 110, { align: 'center' });
+      pdf.setFontSize(10);
+      pdf.text('Mobile: +255-715-890626 / +255-689-398851', 42.5, 37, { align: 'center' });
+      pdf.text('P.O. BOX 677, Dodoma, Tanzania', 42.5, 42, { align: 'center' });
 
       // Save the PDF
       pdf.save('Kijoli-Nawawi-Said-E-Business-Card.pdf');
