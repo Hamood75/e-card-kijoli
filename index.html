@@ -15,8 +15,9 @@
       font-family: 'Arial', sans-serif;
       background: #f4f4f4;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
+      justify-content: center;
       min-height: 100vh;
     }
     .card {
@@ -103,37 +104,37 @@
   <script>
     document.getElementById('download-btn').addEventListener('click', () => {
       const { jsPDF } = window.jspdf;
+
       const pdf = new jsPDF({
         orientation: 'landscape',
         unit: 'mm',
         format: [90, 50], // Standard business card size
       });
 
-      // Add background color
-      pdf.setFillColor(0, 71, 171);
+      // Background gradient
+      const gradient = pdf.createLinearGradient(0, 0, 90, 50);
+      gradient.addColorStop(0, '#0047AB');
+      gradient.addColorStop(1, '#003580');
+      pdf.setFillColor(gradient);
       pdf.rect(0, 0, 90, 50, 'F');
 
-      // Add text details
+      // Add details
+      pdf.setTextColor(255, 255, 255); // White text
       pdf.setFont('helvetica', 'bold');
-      pdf.setTextColor(255, 255, 255);
       pdf.setFontSize(12);
-      pdf.text('Kijoli Nawawi Said', 5, 12);
+      pdf.text('Kijoli Nawawi Said', 5, 15);
 
       pdf.setFontSize(10);
-      pdf.text('Director, Procurement Management Services', 5, 18);
+      pdf.text('Director, Procurement Management Services', 5, 25);
 
       pdf.setFont('helvetica', 'normal');
-      pdf.setFontSize(9);
-      pdf.text('Mobile: +255-715-890626 / +255-689-398851', 5, 26);
-      pdf.text('Ministry of Communication and Information Technology', 5, 32);
-      pdf.text('P.O. BOX 677, Dodoma, Tanzania', 5, 38);
-
-      // Footer text
       pdf.setFontSize(8);
-      pdf.text('Ministry of Communication and Information Technology', 5, 46);
+      pdf.text('Mobile: +255-715-890626 / +255-689-398851', 5, 35);
+      pdf.text('Ministry of Communication and Information Technology', 5, 40);
+      pdf.text('P.O. BOX 677, Dodoma, Tanzania', 5, 45);
 
-      // Save as PDF
-      pdf.save('Kijoli-Nawawi-Said-Business-Card.pdf');
+      // Save PDF
+      pdf.save('Business-Card.pdf');
     });
   </script>
 </body>
