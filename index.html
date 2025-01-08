@@ -122,7 +122,13 @@
       const element = document.getElementById('profile-card');
       
       // Use html2canvas to render the element as an image
-      html2canvas(element).then(canvas => {
+      html2canvas(element, {
+        width: 85 * 3.7795275591, // Convert 85mm to px (1mm = 3.7795 px)
+        height: 54 * 3.7795275591, // Convert 54mm to px
+        scale: 2,  // Increase resolution of the screenshot
+        x: 0,
+        y: 0,
+      }).then(canvas => {
         // Create a link to trigger the download of the image as PNG
         const link = document.createElement('a');
         link.download = 'Kijoli-Nawawi-Said-E-Business-Card.png';
