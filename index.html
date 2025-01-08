@@ -122,34 +122,51 @@
       const { jsPDF } = window.jspdf;
 
       // Create a new jsPDF instance with card dimensions
-      const pdf = new jsPDF({
-        orientation: 'landscape',
-        unit: 'mm',
-        format: [85, 54], // Business card size: 85mm x 54mm
-      });
+const pdf = new jsPDF({
+  orientation: 'landscape',
+  unit: 'mm',
+  format: [85, 54], // Business card size: 85mm x 54mm
+});
 
-      // Add background
-      pdf.setFillColor(0, 71, 171); // Blue gradient color
-      pdf.rect(0, 0, 85, 54, 'F'); // Full card background
+// Add gradient background (simulated with a solid fill color)
+pdf.setFillColor(0, 71, 171); // Blue gradient base
+pdf.rect(0, 0, 85, 54, 'F'); // Full card background
 
-      // Add white rectangle for content
-      pdf.setFillColor(255, 255, 255); // White
-      pdf.roundedRect(5, 5, 75, 44, 3, 3, 'F'); // Add padding
+// Add white rectangle for content
+pdf.setFillColor(255, 255, 255); // White
+pdf.roundedRect(5, 5, 75, 44, 3, 3, 'F'); // Inner card padding
 
-      // Add header text
-      pdf.setTextColor(0, 71, 171); // Blue text
-      pdf.setFontSize(16);
-      pdf.text('Kijoli Nawawi Said', 42.5, 20, { align: 'center' });
+// Add header text (Name and Title)
+pdf.setTextColor(0, 71, 171); // Blue for header
+pdf.setFont('helvetica', 'bold'); // Bold font for name
+pdf.setFontSize(14);
+pdf.text('Kijoli Nawawi Said', 42.5, 18, { align: 'center' });
 
-      pdf.setFontSize(12);
-      pdf.text('Director, Procurement Management Services', 42.5, 25, { align: 'center' });
-      pdf.text('Ministry of Communication & Information Technology', 42.5, 30, { align: 'center' });
+pdf.setFont('helvetica', 'normal'); // Regular font for title
+pdf.setFontSize(10);
+pdf.text('Director, Procurement Management Services', 42.5, 24, { align: 'center' });
 
-      // Add contact details
-      pdf.setTextColor(0, 0, 0); // Black text
-      pdf.setFontSize(10);
-      pdf.text('Mobile: +255-715-890626 / +255-689-398851', 42.5, 37, { align: 'center' });
-      pdf.text('P.O. BOX 677, Dodoma, Tanzania', 42.5, 42, { align: 'center' });
+// Add department/organization details
+pdf.setTextColor(50, 50, 50); // Subtle gray for secondary text
+pdf.setFontSize(9);
+pdf.text('Ministry of Communication & Information Technology', 42.5, 30, { align: 'center' });
+
+// Add a dividing line for visual structure
+pdf.setDrawColor(200, 200, 200); // Light gray for the line
+pdf.line(10, 32, 75, 32); // Horizontal line
+
+// Add contact details
+pdf.setFontSize(9);
+pdf.setTextColor(0, 0, 0); // Black for contact information
+pdf.text('Mobile: +255-715-890626 / +255-689-398851', 42.5, 38, { align: 'center' });
+pdf.text('P.O. BOX 677, Dodoma, Tanzania', 42.5, 43, { align: 'center' });
+
+// Optional: Add a QR code or logo placeholder (simulated with a rectangle)
+pdf.setDrawColor(150, 150, 150); // Light gray border
+pdf.rect(68, 10, 12, 12); // Placeholder rectangle for a logo or QR code
+pdf.setFontSize(6);
+pdf.text('LOGO/QR', 74, 16, { align: 'center' }); // Placeholder text
+
 
       // Save the PDF
       pdf.save('Kijoli-Nawawi-Said-E-Business-Card.pdf');
