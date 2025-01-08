@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kijoli Nawawi Said - E-Business Card</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     * {
       margin: 0;
@@ -105,12 +104,12 @@
     <div id="profile-card" class="profile-card">
       <h2>Contact Details</h2>
       <p>
-        <strong>Mobile:</strong> <a href="tel:+255715890626">+255-715-890626</a> / <a href="tel:+255689398851">+255-689-398851</a><br>
+        <strong>Mobile:</strong> +255-715-890626 / +255-689-398851<br>
         <strong>Address:</strong><br>
         Ministry of Communication and Information Technology<br>
         P.O. BOX 677, Dodoma, Tanzania
       </p>
-      <button id="download" class="cta">Download Card</button>
+      <button id="download" class="cta">Download E-Card</button>
     </div>
   </main>
 
@@ -120,13 +119,35 @@
 
   <script>
     document.getElementById('download').addEventListener('click', () => {
-      const element = document.getElementById('profile-card');
-      html2canvas(element, { scale: 3 }).then((canvas) => { // Higher scale for better quality
-        const link = document.createElement('a');
-        link.download = 'Kijoli-Nawawi-Said-Business-Card.png';
-        link.href = canvas.toDataURL('image/png', 1.0); // PNG format with full quality
-        link.click();
-      });
+      const { jsPDF } = window.jspdf;
+
+      // Create a new jsPDF instance
+      const pdf = new jsPDF();
+
+      // Add graphics
+      pdf.setFillColor(0, 71, 171); // Blue background
+      pdf.rect(0, 0, 210, 60, 'F'); // Header rectangle
+
+      // Add header text
+      pdf.setTextColor(255, 255, 255); // White text
+      pdf.setFontSize(18);
+      pdf.text('Kijoli Nawawi Said', 105, 30, { align: 'center' });
+      pdf.setFontSize(12);
+      pdf.text('Director, Procurement Management Services', 105, 40, { align: 'center' });
+      pdf.text('Ministry of Communication and Information Technology', 105, 50, { align: 'center' });
+
+      // Add contact details
+      pdf.setTextColor(0, 0, 0); // Black text
+      pdf.setFontSize(14);
+      pdf.text('Contact Details', 105, 70, { align: 'center' });
+      pdf.setFontSize(12);
+      pdf.text('Mobile: +255-715-890626 / +255-689-398851', 105, 80, { align: 'center' });
+      pdf.text('Address:', 105, 90, { align: 'center' });
+      pdf.text('Ministry of Communication and Information Technology', 105, 100, { align: 'center' });
+      pdf.text('P.O. BOX 677, Dodoma, Tanzania', 105, 110, { align: 'center' });
+
+      // Save the PDF
+      pdf.save('Kijoli-Nawawi-Said-E-Business-Card.pdf');
     });
   </script>
 </body>
