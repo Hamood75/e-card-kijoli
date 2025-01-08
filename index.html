@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kijoli Nawawi Said - E-Business Card</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.4.0/dist/jspdf.umd.min.js"></script>
   <style>
     * {
       margin: 0;
@@ -120,13 +120,33 @@
 
   <script>
     document.getElementById('download').addEventListener('click', () => {
-      const element = document.getElementById('profile-card');
-      html2canvas(element).then((canvas) => {
-        const link = document.createElement('a');
-        link.download = 'Kijoli-Nawawi-Said-Business-Card.png';
-        link.href = canvas.toDataURL();
-        link.click();
-      });
+      const { jsPDF } = window.jspdf;
+
+      // Initialize jsPDF
+      const doc = new jsPDF();
+
+      // Add Header
+      doc.setFillColor(0, 71, 171); // Header background
+      doc.rect(0, 0, 210, 40, 'F');
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(22);
+      doc.text('Kijoli Nawawi Said', 105, 20, { align: 'center' });
+      doc.setFontSize(16);
+      doc.text('Director, Procurement Management Services', 105, 30, { align: 'center' });
+
+      // Add Body
+      doc.setFontSize(14);
+      doc.setTextColor(0, 0, 0);
+      doc.text('Contact Details', 105, 60, { align: 'center' });
+
+      doc.setFontSize(12);
+      doc.text('Mobile: +255-715-890626 / +255-689-398851', 15, 80);
+      doc.text('Address:', 15, 90);
+      doc.text('Ministry of Communication and Information Technology', 15, 100);
+      doc.text('P.O. BOX 677, Dodoma, Tanzania', 15, 110);
+
+      // Save as PDF
+      doc.save('Kijoli-Nawawi-Said-Business-Card.pdf');
     });
   </script>
 </body>
