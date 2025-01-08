@@ -120,13 +120,22 @@
   <script>
     document.getElementById('download').addEventListener('click', () => {
       const element = document.getElementById('profile-card');
-
+      
+      // Use html2canvas to render the element as an image
       html2canvas(element).then(canvas => {
         // Create a link to trigger the download of the image as PNG
         const link = document.createElement('a');
         link.download = 'Kijoli-Nawawi-Said-E-Business-Card.png';
         link.href = canvas.toDataURL('image/png');
+        
+        // Append link to the document to trigger click and download
+        document.body.appendChild(link);
         link.click();
+        
+        // Remove link after triggering download
+        document.body.removeChild(link);
+      }).catch(error => {
+        console.error('Error capturing the screenshot:', error);
       });
     });
   </script>
