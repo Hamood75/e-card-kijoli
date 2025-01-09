@@ -3,12 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Back of Business Card</title>
+  <title>Kijoli Nawawi Said - Back of Business Card</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf/0.9.2/html2pdf.bundle.js"></script>
   <style>
-    /* Business Card Design */
+    /* Same styles as previous but only for back of the card */
     .back {
       width: 350px;
       height: 200px;
@@ -55,61 +54,39 @@
       grid-column: 1 / span 12;
       grid-row: 12 / span 1;
     }
-    /* Button Styles */
-    .cta {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 10px 25px;
-      background: #0047AB;
-      color: white;
-      text-transform: uppercase;
-      text-decoration: none;
-      border-radius: 30px;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-    .cta:hover {
-      background: #003580;
+
     }
   </style>
 </head>
 <body>
-
-  <div id="back-card" class="back">
-    <div class="cyan"></div>
-    <div class="top dots"></div>
-    <div class="personal-info">
-      <p>Kijoli Nawawi Said</p>
-      <p>Director, Procurement Management Services</p>
-      <p>Ministry of Communication and Information Technology</p>
-      <p>P.O. BOX 677</p>
-      <p>Dodoma, Tanzania</p>
-      <p>+255-715-890626 / +255-689-398851</p>
-      <p>kijoli.nawawi@mawasiliano.go.tz</p>
-    </div>
-    <div class="bottom dots"></div>
-    <div class="lightblue"></div>
-  </div>
-
-  <button class="cta" id="download">Download Back of Card</button>
+  <!-- Back of the Card -->
+ <div id="back-card" class="back">
+      <div class="cyan"></div>
+      <div class="top dots"></div>
+      <div class="personal-info">
+        <p>Kijoli Nawawi Said</p>
+        <p>Director, Procurement Management Services</p>
+        <p>Ministry of Communication and Information Technology</p>
+        <p>P.O. BOX 677</p>
+        <p>Dodoma, Tanzania</p>
+        <p>+255-715-890626 / +255-689-398851</p>
+        <p>kijoli.nawawi@mawasiliano.go.tz</p>
+      </div>
+      <div class="bottom dots"></div>
+      <div class="lightblue"></div>
+    </div>
 
   <script>
-    document.getElementById('download').addEventListener('click', () => {
-      const backCard = document.getElementById('back-card');
-
-      // Use html2pdf to generate the PDF or save the image of the card
-      const opt = {
-        margin:       0.5,
-        filename:     'back-business-card.png',
-        image:        { type: 'png', quality: 1 },
-        html2canvas:  { scale: 3 },
-        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-      };
-
-      // Using html2pdf.js to convert the card to a PNG image
-      html2pdf().from(backCard).set(opt).save();
-    });
+    window.onload = function() {
+      // Capture the back of the card and download it as an image
+      html2canvas(document.getElementById("back-card")).then(canvas => {
+        const image = canvas.toDataURL("image/png");
+        const link = document.createElement("a");
+        link.href = image;
+        link.download = "business-card-back.png";
+        link.click();
+      });
+    };
   </script>
-
 </body>
 </html>
