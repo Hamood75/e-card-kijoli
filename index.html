@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kijoli Nawawi Said - E-Business Card</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
   <style>
     * {
       margin: 0;
@@ -109,7 +110,7 @@
         Ministry of Communication and Information Technology<br>
         P.O. BOX 677, Dodoma, Tanzania
       </p>
-      <button id="download" class="cta">Download E-Card</button>
+      <button id="download" class="cta">Download</button>
     </div>
   </main>
 
@@ -118,30 +119,19 @@
   </footer>
 
   <script>
-    document.getElementById('download').addEventListener('click', () => {
-      const element = document.getElementById('profile-card');
-      
-      // Use html2canvas to render the element as an image
-      html2canvas(element, {
-        width: 85 * 3.7795275591, // Convert 85mm to px (1mm = 3.7795 px)
-        height: 54 * 3.7795275591, // Convert 54mm to px
-        scale: 2,  // Increase resolution of the screenshot
-        x: 0,
-        y: 0,
-      }).then(canvas => {
-        // Create a link to trigger the download of the image as PNG
-        const link = document.createElement('a');
-        link.download = 'Kijoli-Nawawi-Said-E-Business-Card.png';
-        link.href = canvas.toDataURL('image/png');
-        
-        // Append link to the document to trigger click and download
-        document.body.appendChild(link);
-        link.click();
-        
-        // Remove link after triggering download
-        document.body.removeChild(link);
-      }).catch(error => {
-        console.error('Error capturing the screenshot:', error);
+    document.getElementById("download").addEventListener("click", () => {
+      const profileCard = document.getElementById("profile-card");
+      html2canvas(profileCard).then(canvas => {
+        const imgData = canvas.toDataURL("image/png");
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF();
+
+        // Set PDF width and height proportional to the card
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = (canvas.height * pageWidth) / canvas.width;
+
+        pdf.addImage(imgData, "PNG", 0, 0, pageWidth, pageHeight);
+        pdf.save("e-business-card.pdf");
       });
     });
   </script>
