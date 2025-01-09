@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kijoli Nawawi Said - E-Business Card</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
   <style>
     * {
@@ -119,20 +119,29 @@
   </footer>
 
   <script>
-    document.getElementById("download").addEventListener("click", () => {
+    document.getElementById("download").addEventListener("click", async () => {
       const profileCard = document.getElementById("profile-card");
-      html2canvas(profileCard).then(canvas => {
-        const imgData = canvas.toDataURL("image/png");
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF();
 
-        // Set PDF width and height proportional to the card
-        const pageWidth = pdf.internal.pageSize.getWidth();
-        const pageHeight = (canvas.height * pageWidth) / canvas.width;
+      // Capture the profile card using html2canvas
+      const canvas = await html2canvas(profileCard, { scale: 2 });
+      const imgData = canvas.toDataURL("image/png");
 
-        pdf.addImage(imgData, "PNG", 0, 0, pageWidth, pageHeight);
-        pdf.save("e-business-card.pdf");
+      // Use jsPDF to create the PDF
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a4",
       });
+
+      // Set the dimensions of the image inside the PDF
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = pageWidth - 20; // Add some margin
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
+      pdf.save("e-business-card.pdf");
     });
   </script>
 </body>
